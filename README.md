@@ -7,8 +7,6 @@
  </figure>
 </div>
 
-# <p align="center">Desenvolvimento do Projeto para a matéria Certificadora de Competência Identitária</p>
-
 # Integrantes do grupo: <br>
 
 <markdown-accessiblity-table data-catalyst=""><table tabindex="0">
