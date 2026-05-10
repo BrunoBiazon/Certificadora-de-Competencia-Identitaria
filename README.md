@@ -1,5 +1,12 @@
 # <h1 align="center"> Certificadora de Competencia Identitaria - ELLP [Gestão de Oficinas] </h1>
 
+<div align="center">
+ <figure>
+  <img src="readME_image/prototipoFigma.png" alt="Protótipo Figma">
+  <figcaption>Protótipo do website feito com o Figma</figcaption>
+ </figure>
+</div>
+
 # <p align="center">Desenvolvimento do Projeto para a matéria Certificadora de Competência Identitária</p>
 
 # Integrantes do grupo: <br>
