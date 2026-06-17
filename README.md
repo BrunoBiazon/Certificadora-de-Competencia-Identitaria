@@ -23,7 +23,7 @@
 
 # Descrição do projeto
 
-  O sistema para gestão de oficinas do ELLP é uma plataforma Fullstack desenvolvida para centralizar e automatizar a gestão das oficinas do projeto de extensão ELLP (Ensino Lúdico de Programação) da UTFPR-CP. O sistema substitui controles manuais, permitindo a gestão de tutores, alunos, turmas e curadoria de oficinas pedagógicas.
+  O sistema para gestão de oficinas do ELLP é uma plataforma Fullstack desenvolvida para centralizar e automatizar a gestão das oficinas do projeto de extensão ELLP (Ensino Lúdico de Programação) da UTFPR-CP. O sistema substitui controles manuais, permitindo a gestão de tutores, alunos, turmas e curadoria de oficinas.
   
 # Tecnologias
 
