@@ -34,8 +34,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # TanStack Start compila os arquivos estáticos dentro de .output/public
-          path: ./.output/public
+          # Alterado para ./dist que é o padrão gerado quando o 'vite build' roda com sucesso
+          path: ./dist
 
       - name: Deploy to GitHub Pages
         id: deployment
