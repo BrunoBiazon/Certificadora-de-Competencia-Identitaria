@@ -22,11 +22,11 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci # ou 'npm install' se não tiver o package-lock atualizado
+        run: npm install
 
       - name: Build
         run: npm run build
@@ -34,7 +34,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist # Pasta padrão que o Vite gera o build
+          # TanStack Start compila os arquivos estáticos dentro de .output/public
+          path: ./.output/public
 
       - name: Deploy to GitHub Pages
         id: deployment
