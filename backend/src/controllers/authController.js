@@ -1,4 +1,5 @@
 const Tutor = require("../models/Tutor");
+const Professor = require("../models/Professor");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("../utils/asyncHandler");
@@ -33,6 +34,17 @@ const seedAdmin = async () => {
       status: "ativo"
     });
   }
+
+  const profExists = await Professor.findOne({ email: "professor@ellp.utfpr.edu.br" });
+  if (!profExists) {
+    const saltProf = await bcrypt.genSalt(10);
+    const hashProf = await bcrypt.hash("prof123", saltProf);
+    await Professor.create({
+      nome: "Prof. Orientador ELLP",
+      email: "professor@ellp.utfpr.edu.br",
+      senha: hashProf
+    });
+  }
 };
 
 exports.register = asyncHandler(async (req, res, next) => {
@@ -42,14 +54,12 @@ exports.register = asyncHandler(async (req, res, next) => {
   if (exists) {
     return res.status(409).json({ success: false, error: "E-mail já cadastrado" });
   }
-  const salt = await bcrypt.genSalt(10);
-  const hashSenha = await bcrypt.hash(senha, salt);
   const tutor = await Tutor.create({
     nome,
     email,
     curso,
     periodo: "1º período",
-    senha: hashSenha,
+    senha,
     role: "tutor",
     status: "pendente"
   });
@@ -65,29 +75,43 @@ exports.register = asyncHandler(async (req, res, next) => {
 exports.login = asyncHandler(async (req, res, next) => {
   await seedAdmin();
   const { email, senha } = req.body;
-  const tutor = await Tutor.findOne({ email: email.toLowerCase() });
-  if (!tutor) {
+  const lowercaseEmail = email.toLowerCase();
+  
+  let user = await Tutor.findOne({ email: lowercaseEmail });
+  let userType = "tutor";
+
+  if (!user) {
+    user = await Professor.findOne({ email: lowercaseEmail });
+    userType = "professor";
+  }
+
+  if (!user) {
     return res.status(401).json({ success: false, error: "Credenciais inválidas" });
   }
-  const isMatch = await bcrypt.compare(senha, tutor.senha);
+
+  const isMatch = await bcrypt.compare(senha, user.senha);
   if (!isMatch) {
     return res.status(401).json({ success: false, error: "Credenciais inválidas" });
   }
-  if (tutor.status === "pendente") {
-    return res.status(403).json({ success: false, error: "Cadastro pendente de aprovação" });
+
+  if (userType === "tutor") {
+    if (user.status === "pendente") {
+      return res.status(403).json({ success: false, error: "Cadastro pendente de aprovação" });
+    }
+    if (user.status === "inativo") {
+      return res.status(403).json({ success: false, error: "Tutor inativo" });
+    }
   }
-  if (tutor.status === "inativo") {
-    return res.status(403).json({ success: false, error: "Tutor inativo" });
-  }
-  const token = jwt.sign({ id: tutor._id }, process.env.JWT_SECRET || "secreto", { expiresIn: "30d" });
+
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || "secreto", { expiresIn: "30d" });
   res.status(200).json({
     token,
     user: {
-      id: tutor._id,
-      nome: tutor.nome,
-      email: tutor.email,
-      role: tutor.role,
-      status: tutor.status
+      id: user._id,
+      nome: user.nome,
+      email: user.email,
+      role: user.role || "professor",
+      status: user.status || "ativo"
     }
   });
 });
@@ -97,7 +121,7 @@ exports.me = asyncHandler(async (req, res, next) => {
     id: req.user._id,
     nome: req.user.nome,
     email: req.user.email,
-    role: req.user.role,
-    status: req.user.status
+    role: req.user.role || "professor",
+    status: req.user.status || "ativo"
   });
 });

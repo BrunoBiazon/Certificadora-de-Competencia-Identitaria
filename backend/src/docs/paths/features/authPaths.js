@@ -2,7 +2,7 @@ module.exports = {
   "/api/auth/register": {
     post: {
       tags: ["Autenticação"],
-      summary: "Cadastra um novo tutor",
+      summary: "Auto-cadastro de um novo tutor monitor",
       requestBody: {
         required: true,
         content: {
@@ -13,7 +13,7 @@ module.exports = {
       },
       responses: {
         201: {
-          description: "Tutor cadastrado com sucesso",
+          description: "Tutor auto-cadastrado com sucesso (status pendente)",
           content: {
             "application/json": {
               schema: { $ref: "#/components/schemas/Tutor" }
@@ -30,7 +30,7 @@ module.exports = {
   "/api/auth/login": {
     post: {
       tags: ["Autenticação"],
-      summary: "Autentica um tutor ou administrador",
+      summary: "Autentica um tutor, administrador ou professor",
       requestBody: {
         required: true,
         content: {
@@ -74,7 +74,7 @@ module.exports = {
   "/api/auth/me": {
     get: {
       tags: ["Autenticação"],
-      summary: "Retorna os dados do tutor autenticado",
+      summary: "Retorna os dados do usuário autenticado (tutor, admin ou professor)",
       responses: {
         200: {
           description: "Dados do usuário logado",

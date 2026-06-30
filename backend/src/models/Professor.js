@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const ProfessorSchema = new mongoose.Schema({
   nome: {
@@ -21,6 +22,14 @@ const ProfessorSchema = new mongoose.Schema({
 }, {
   timestamps: true,
   collection: "professores"
+});
+
+ProfessorSchema.pre("save", async function (next) {
+  if (!this.isModified("senha")) {
+    next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.senha = await bcrypt.hash(this.senha, salt);
 });
 
 module.exports = mongoose.model("Professor", ProfessorSchema);
