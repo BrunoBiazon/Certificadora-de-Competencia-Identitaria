@@ -45,11 +45,35 @@ O sistema permite que os responsáveis pelo projeto realizem o acompanhamento da
 
 # Divisão do grupo para o desenvolvimento
 
+# Tecnologias utilizadas
+
+## Front-end
+- TypeScript
+- React
+- HTML5
+- CSS3
+
+## Back-end
+- Node.js
+- Express
+
+## Banco de Dados
+- MongoDB
+
+## Ferramentas utilizadas
+- Visual Studio Code
+- GitHub
+- Figma
+
+
+# Divisão Laboral
+
 - Luís: Responsável pela Prototipagem, UI/UX e Scrum Master
 - João: Responsável pelo Módulo de Professores e Tutores
 - Danilo: Responsável pelo Módulo de Temas e Curadoria de Oficinas
 - Pedro: Responsável pelo Módulo de Alunos e Enturmação
-- Bruno: Responsável pelo Backend e integração
+- Bruno: Responsável pelo Banco de Dados e Integração
+
 
 # Funcionalidades Desenvolvidas
 
